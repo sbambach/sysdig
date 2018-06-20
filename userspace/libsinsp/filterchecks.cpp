@@ -1373,6 +1373,7 @@ const filtercheck_field_info sinsp_filter_check_thread_fields[] =
 	{PT_CHARBUF, EPF_NONE, PF_NA, "proc.exepath", "The full executable path of the process."},
 	{PT_CHARBUF, EPF_TABLE_ONLY, PF_NA, "thread.nametid", "this field chains the process name and tid of a thread and can be used as a specific identifier of a thread for a specific execve."},
 	{PT_INT64, EPF_NONE, PF_ID, "proc.vpgid", "the process group id of the process generating the event, as seen from its current PID namespace."},
+	{PT_INT32, EPF_NONE, PF_ID, "proc.foo", "a fake parameter to test event changes with the same event type."}
 };
 
 sinsp_filter_check_thread::sinsp_filter_check_thread()
@@ -2178,6 +2179,8 @@ uint8_t* sinsp_filter_check_thread::extract(sinsp_evt *evt, OUT uint32_t* len, b
 	case TYPE_NAMETID:
 		m_tstr = tinfo->get_comm() + to_string(evt->get_tid());
 		RETURN_EXTRACT_STRING(m_tstr);
+	case TYPE_FOO:
+		RETURN_EXTRACT_VAR(tinfo->m_foo);
 	default:
 		ASSERT(false);
 		return NULL;

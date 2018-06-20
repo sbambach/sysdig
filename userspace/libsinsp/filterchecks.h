@@ -377,6 +377,7 @@ public:
 		TYPE_EXEPATH = 43,
 		TYPE_NAMETID = 44,
 		TYPE_VPGID = 45,
+		TYPE_FOO = 46,
 	};
 
 	sinsp_filter_check_thread();

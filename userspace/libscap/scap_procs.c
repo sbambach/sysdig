@@ -74,6 +74,7 @@ int32_t scap_proc_fill_info_from_stats(char* procdirname, struct scap_threadinfo
 	uint64_t pfmajor;
 	uint64_t pfminor;
 	int32_t tty;
+	int32_t foo;
 	char line[512];
 	char tmpc;
 	char* s;
@@ -89,6 +90,7 @@ int32_t scap_proc_fill_info_from_stats(char* procdirname, struct scap_threadinfo
 	tinfo->pfminor = 0;
 	tinfo->filtered_out = 0;
 	tinfo->tty = 0;
+	tinfo->foo = 1337;
 
 	snprintf(filename, sizeof(filename), "%sstatus", procdirname);
 

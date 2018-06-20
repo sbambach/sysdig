@@ -990,6 +990,13 @@ cgroups_error:
 #endif
 		if (unlikely(res != PPM_SUCCESS))
 			return res;
+
+		/*
+		 * foo
+		 */
+		res = val_to_ring(args, 1337, 0, false, 0);
+		if (unlikely(res != PPM_SUCCESS))
+			return res;
 	}
 
 	return add_sentinel(args);

@@ -1148,6 +1148,8 @@ void sinsp_parser::parse_clone_exit(sinsp_evt *evt)
 
 		tinfo->m_tty = ptinfo->m_tty;
 
+		tinfo->m_foo = ptinfo->m_foo;
+
 		if(!(flags & PPM_CL_CLONE_THREAD))
 		{
 			tinfo->m_env = ptinfo->m_env;
@@ -1187,6 +1189,8 @@ void sinsp_parser::parse_clone_exit(sinsp_evt *evt)
 			tinfo->m_sid = ptinfo->m_sid;
 			tinfo->m_vpgid = ptinfo->m_vpgid;
 			tinfo->m_tty = ptinfo->m_tty;
+			tinfo->m_foo = ptinfo->m_foo;
+
 			if(!(flags & PPM_CL_CLONE_THREAD))
 			{
 				tinfo->m_env = ptinfo->m_env;
@@ -1741,12 +1745,14 @@ void sinsp_parser::parse_execve_exit(sinsp_evt *evt)
 	// events are no longer changed.
 	// sinsp_evt::get_num_params() can instead be used
 	// to identify the version of the event.
-	// For example:
-	//
-	// if(evt->get_num_params() > 17)
-	// {
-	//   ...
-	// }
+
+	if(evt->get_num_params() > 17)
+	{
+		// Get foo
+		parinfo = evt->get_param(18);
+		ASSERT(parinfo->m_len == sizeof(int32_t));
+		evt->m_tinfo->m_foo = *(int32_t *) parinfo->m_val;
+	}
 
 	//
 	// execve starts with a clean fd list, so we get rid of the fd list that clone

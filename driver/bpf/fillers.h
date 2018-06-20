@@ -1688,6 +1688,13 @@ FILLER(proc_startupdate_3, true)
 		 * pgid
 		 */
 		res = bpf_val_to_ring_type(data, bpf_task_pgrp_vnr(task), PT_PID);
+
+		/*
+		 * foo
+		 */
+		res = bpf_val_to_ring_type(data, 1337, PT_INT32);
+		if (res != PPM_SUCCESS)
+			return res;
 	}
 
 	return res;

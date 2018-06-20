@@ -260,6 +260,7 @@ public:
 	size_t m_program_hash;
 	size_t m_program_hash_falco;
 	int32_t m_tty;
+	int32_t m_foo;
 
 	//
 	// State for multi-event processing

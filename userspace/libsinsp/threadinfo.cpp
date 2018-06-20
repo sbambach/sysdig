@@ -89,6 +89,7 @@ void sinsp_threadinfo::init()
 	m_lastevent_data = NULL;
 	m_parent_loop_detected = false;
 	m_tty = 0;
+	m_foo = 0;
 	m_blprogram = NULL;
 }
 
@@ -420,6 +421,7 @@ void sinsp_threadinfo::init(scap_threadinfo* pi)
 	m_vpid = pi->vpid;
 	m_clone_ts = pi->clone_ts;
 	m_tty = pi->tty;
+	m_foo = pi->foo;
 
 	set_cgroups(pi->cgroups, pi->cgroups_len);
 	m_root = pi->root;
@@ -1423,6 +1425,7 @@ void sinsp_thread_manager::thread_to_scap(sinsp_threadinfo& tinfo, 	scap_threadi
 	sctinfo->pfminor = tinfo.m_pfminor;
 	sctinfo->vtid = tinfo.m_vtid;
 	sctinfo->vpid = tinfo.m_vpid;
+	sctinfo->foo = tinfo.m_foo;
 	sctinfo->fdlist = NULL;
 	sctinfo->filtered_out = false;
 }
@@ -1463,7 +1466,9 @@ void sinsp_thread_manager::dump_threads_to_file(scap_dumper_t* dumper)
 			sizeof(int64_t) +  // vtid
 			sizeof(int64_t) +  // vpid
                         2 + MIN(tinfo.cgroups_len(), SCAP_MAX_CGROUPS_SIZE) +
-			2 + MIN(tinfo.m_root.size(), SCAP_MAX_PATH_SIZE));
+			2 + MIN(tinfo.m_root.size(), SCAP_MAX_PATH_SIZE) +
+			sizeof(uint32_t)   // foo
+		);
 
 		lengths.push_back(il);
 		totlen += il;
