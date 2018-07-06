@@ -490,6 +490,7 @@ static int32_t scap_write_proclist(scap_t *handle, scap_dumper_t *d)
 
 	if(scap_write_proclist_header(handle, d, totlen) != SCAP_SUCCESS)
 	{
+		free(lengths);
 		return SCAP_FAILURE;
 	}
 
@@ -505,6 +506,7 @@ static int32_t scap_write_proclist(scap_t *handle, scap_dumper_t *d)
 
 		if(scap_write_proclist_entry(handle, d, tinfo, lengths[idx++]) != SCAP_SUCCESS)
 		{
+			free(lengths);
 			return SCAP_FAILURE;
 		}
 	}
